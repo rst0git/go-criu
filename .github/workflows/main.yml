@@ -30,10 +30,10 @@ jobs:
 
     - name: Install protoc-gen-go
       run: |
-        sudo env "GOBIN=/usr/bin" go install github.com/golang/protobuf/protoc-gen-go@latest
+        sudo -E "GOBIN=/usr/bin" go install github.com/golang/protobuf/protoc-gen-go@latest
 
     - name: Test go-criu
-      run: sudo env "PATH=$PATH" make test
+      run: sudo -E "PATH=$PATH" make test
 
     - name: Test magicgen script
       run: make -C scripts test
@@ -49,14 +49,14 @@ jobs:
           sudo unzip -o protoc.zip -d /usr
           sudo make -C crit clean
           make -C crit gen-proto
-          sudo make -C crit all
+          sudo make -E "PATH=$PATH" -C crit all
         fi
-        sudo make -C test crit-test
+        sudo make -E "PATH=$PATH" -C test crit-test
 
     - name: Check code coverage
       if: matrix.go-version == '1.20.x' && matrix.criu_branch == 'criu-dev'
       run: |
         # Run actual test as root as it uses CRIU.
-        sudo env "PATH=$PATH" make coverage
+        sudo -E "PATH=$PATH" make coverage
         # Upload coverage results to codecov
         sudo -E make codecov
