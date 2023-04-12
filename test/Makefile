@@ -43,7 +43,7 @@ crit-test:
 
 test.coverage: *.go
 	$(GO) test \
-		-covermode=count \
+		-covermode=atomic \
 		-coverpkg=./... \
 		-mod=vendor \
 		-tags coverage \
@@ -51,7 +51,7 @@ test.coverage: *.go
 
 phaul/phaul.coverage: phaul/*.go
 	$(GO) test \
-		-covermode=count \
+		-covermode=atomic \
 		-coverpkg=./... \
 		-mod=vendor \
 		-tags coverage \
