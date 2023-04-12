@@ -56,7 +56,8 @@ jobs:
     - name: Check code coverage
       if: matrix.go-version == '1.20.x' && matrix.criu_branch == 'criu-dev'
       run: |
+        sudo go env
         # Run actual test as root as it uses CRIU.
-        sudo -E make coverage
+        sudo make coverage
         # Upload coverage results to codecov
-        sudo -E make codecov
+        sudo make codecov
